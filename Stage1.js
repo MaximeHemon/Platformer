@@ -7,7 +7,9 @@ var KeyZ;
 var KeyQ;
 var KeyS;
 var KeyD;
-
+var nuage1;
+var nuage2;
+var nuage3;
 
 
 class Stage1 extends Phaser.Scene{
@@ -22,10 +24,207 @@ class Stage1 extends Phaser.Scene{
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
         this.load.tilemapTiledJSON('map','Assets/level.json');
+        this.load.image('nuage1','Assets/nuage_1.png');
+        this.load.image('nuage2','Assets/nuage_2.png');
+        this.load.image('nuage3','Assets/nuage_3.png');
+        
     }
     create(){
 
-        this.add.image(0,0,'level1').setOrigin(0);
+        //Nuages 
+        
+        nuage3 = this.physics.add.group();
+        var image = this.add.image(-100,190,'nuage3');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 327000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage3 = this.physics.add.group();
+        var image = this.add.image(-100,80,'nuage3');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 307000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage3 = this.physics.add.group();
+        var image = this.add.image(-100,120,'nuage3');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 287000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage2 = this.physics.add.group();
+        var image = this.add.image(-100,100,'nuage2');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 160000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage2 = this.physics.add.group();
+        var image = this.add.image(-100,140,'nuage2');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 167000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage2 = this.physics.add.group();
+        var image = this.add.image(-100,80,'nuage2');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 147000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage1 = this.physics.add.group();
+        var image = this.add.image(-100,80,'nuage1');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 107000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });  
+        
+        nuage1 = this.physics.add.group();
+        var image = this.add.image(-100,180,'nuage1');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 97000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        }); 
+            
+        nuage3 = this.physics.add.group();
+        var image = this.add.image(1500,190,'nuage3');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 53000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage3 = this.physics.add.group();
+        var image = this.add.image(1500,80,'nuage3');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 52000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage3 = this.physics.add.group();
+        var image = this.add.image(1500,120,'nuage3');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 50000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage2 = this.physics.add.group();
+        var image = this.add.image(1500,100,'nuage2');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 40000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage2 = this.physics.add.group();
+        var image = this.add.image(1500,140,'nuage2');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 37000,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage2 = this.physics.add.group();
+        var image = this.add.image(1500,80,'nuage2');
+        this.tweens.add({
+
+            targets: image,
+            x: 3200,
+            duration: 33500,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });
+        
+        nuage1 = this.physics.add.group();
+        var image = this.add.image(1500,80,'nuage1');
+        this.tweens.add({
+
+            targets: image,
+            x: 1700,
+            duration: 13500,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        });  
+        
+        nuage1 = this.physics.add.group();
+        var image = this.add.image(1500,180,'nuage1');
+        this.tweens.add({
+
+            targets: image,
+            x: 1700,
+            duration: 10500,
+            ease: 'Sine.easeInOut',
+            loop: 90,
+            loopDelay: 0
+        }); 
+        //this.add.image(0,0,'level1').setOrigin(0);
         
         player = this.physics.add.sprite(101,59,'personnage');
         player.body.setAllowGravity(true);
