@@ -3,6 +3,10 @@ var cursors;
 var paddle;
 var padConnected= false;
 var platforms;
+var KeyZ;
+var KeyQ;
+var KeyS;
+var KeyD;
 
 
 
@@ -13,6 +17,7 @@ class Stage1 extends Phaser.Scene{
     init(data){
     }
     preload(){   
+        
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
@@ -20,7 +25,7 @@ class Stage1 extends Phaser.Scene{
     }
     create(){
 
-        //this.add.image(0,0,'level1').setOrigin(0);
+        this.add.image(0,0,'level1').setOrigin(0);
         
         player = this.physics.add.sprite(101,59,'personnage');
         player.body.setAllowGravity(true);
@@ -44,6 +49,11 @@ class Stage1 extends Phaser.Scene{
         
         
         cursors = this.input.keyboard.createCursorKeys(); 
+        
+        KeyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+        KeyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        KeyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        KeyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         
         
         
@@ -90,22 +100,22 @@ class Stage1 extends Phaser.Scene{
         
         
         //Controles Clavier
-        if (cursors.left.isDown){
+        if (cursors.left.isDown || KeyQ.isDown){
         player.setVelocityX(-600);
         }
-        else if (cursors.right.isDown){
+        else if (cursors.right.isDown || KeyD.isDown){
             player.setVelocityX(600);
         }
         
-        else if (cursors.down.isDown){
+        else if (cursors.down.isDown || KeyS.isDown){
             player.setVelocityY(600);
         }
         else{
             player.setVelocityX(0);
         }
-        if (cursors.up.isDown && player.body.touching.down){
+        if (cursors.up.isDown&& player.body.blocked.down || KeyZ.isDown && player.body.blocked.down){
                         console.log(cursors);
         player.setVelocityY(-450);
-        }
+        }        
     }        
 }
