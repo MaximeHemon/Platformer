@@ -23,7 +23,7 @@ class Stage1 extends Phaser.Scene{
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
-        this.load.tilemapTiledJSON('map','Assets/level.json');
+        this.load.tilemapTiledJSON('map','Assets/level_platforme.json');
         this.load.image('nuage1','Assets/nuage_1.png');
         this.load.image('nuage2','Assets/nuage_2.png');
         this.load.image('nuage3','Assets/nuage_3.png');
@@ -224,7 +224,8 @@ class Stage1 extends Phaser.Scene{
             loop: 90,
             loopDelay: 0
         }); 
-        //this.add.image(0,0,'level1').setOrigin(0);
+        
+        this.add.image(0,-120,'level1').setOrigin(0);
         
         player = this.physics.add.sprite(101,59,'personnage');
         player.body.setAllowGravity(true);
@@ -233,9 +234,10 @@ class Stage1 extends Phaser.Scene{
         const map = this.make.tilemap({key : 'map'});
         const tileset = map.addTilesetImage('Tuiles','tiles');
         
+        this.cameras.main.setZoom(0.80)
         this.cameras.main.startFollow(player); 
-        this.cameras.main.setBounds(0,0,3000,448);
-        this.physics.world.setBounds(0,0,3000,448);
+        this.cameras.main.setBounds(0,0,3000,768);
+        this.physics.world.setBounds(0,0,3000,768);
         
         platforms = map.createLayer('Platformes',tileset, 0, 0);
         platforms.setCollisionByExclusion(-1,true)
