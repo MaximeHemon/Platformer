@@ -3,6 +3,7 @@ var cursors;
 var paddle;
 var padConnected= false;
 var platforms;
+var sol;
 var KeyZ;
 var KeyQ;
 var KeyS;
@@ -10,6 +11,8 @@ var KeyD;
 var nuage1;
 var nuage2;
 var nuage3;
+var collision_bas;
+var viensDeTraverser = false;
 
 
 class Stage1 extends Phaser.Scene{
@@ -23,6 +26,8 @@ class Stage1 extends Phaser.Scene{
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
+        
+        
         this.load.tilemapTiledJSON('map','Assets/level_platforme.json');
         this.load.image('nuage1','Assets/nuage_1.png');
         this.load.image('nuage2','Assets/nuage_2.png');
@@ -31,10 +36,14 @@ class Stage1 extends Phaser.Scene{
     }
     create(){
 
+        //----------setTimeout-------------//
+        // setTimeout(function(){ce qui se passe}, temps en millisecondes) //
+        //--------------------------------//
+        
         //Nuages 
         
         nuage3 = this.physics.add.group();
-        var image = this.add.image(-100,190,'nuage3');
+        var image = this.add.image(-100,220,'nuage3');
         this.tweens.add({
 
             targets: image,
@@ -46,7 +55,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage3 = this.physics.add.group();
-        var image = this.add.image(-100,80,'nuage3');
+        var image = this.add.image(-100,325,'nuage3');
         this.tweens.add({
 
             targets: image,
@@ -58,7 +67,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage3 = this.physics.add.group();
-        var image = this.add.image(-100,120,'nuage3');
+        var image = this.add.image(-100,250,'nuage3');
         this.tweens.add({
 
             targets: image,
@@ -70,7 +79,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage2 = this.physics.add.group();
-        var image = this.add.image(-100,100,'nuage2');
+        var image = this.add.image(-100,180,'nuage2');
         this.tweens.add({
 
             targets: image,
@@ -82,7 +91,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage2 = this.physics.add.group();
-        var image = this.add.image(-100,140,'nuage2');
+        var image = this.add.image(-100,100,'nuage2');
         this.tweens.add({
 
             targets: image,
@@ -94,7 +103,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage2 = this.physics.add.group();
-        var image = this.add.image(-100,80,'nuage2');
+        var image = this.add.image(-100,200,'nuage2');
         this.tweens.add({
 
             targets: image,
@@ -106,7 +115,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage1 = this.physics.add.group();
-        var image = this.add.image(-100,80,'nuage1');
+        var image = this.add.image(-100,400,'nuage1');
         this.tweens.add({
 
             targets: image,
@@ -118,7 +127,7 @@ class Stage1 extends Phaser.Scene{
         });  
         
         nuage1 = this.physics.add.group();
-        var image = this.add.image(-100,180,'nuage1');
+        var image = this.add.image(-100,200,'nuage1');
         this.tweens.add({
 
             targets: image,
@@ -130,31 +139,31 @@ class Stage1 extends Phaser.Scene{
         }); 
             
         nuage3 = this.physics.add.group();
-        var image = this.add.image(1500,190,'nuage3');
+        var image = this.add.image(1500,350,'nuage3');
         this.tweens.add({
 
             targets: image,
             x: 3200,
-            duration: 53000,
+            duration: 55000,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         });
         
         nuage3 = this.physics.add.group();
-        var image = this.add.image(1500,80,'nuage3');
+        var image = this.add.image(1500,300,'nuage3');
         this.tweens.add({
 
             targets: image,
             x: 3200,
-            duration: 52000,
+            duration: 58000,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         });
         
         nuage3 = this.physics.add.group();
-        var image = this.add.image(1500,120,'nuage3');
+        var image = this.add.image(1500,200,'nuage3');
         this.tweens.add({
 
             targets: image,
@@ -166,66 +175,66 @@ class Stage1 extends Phaser.Scene{
         });
         
         nuage2 = this.physics.add.group();
-        var image = this.add.image(1500,100,'nuage2');
+        var image = this.add.image(1500,170,'nuage2');
         this.tweens.add({
 
             targets: image,
             x: 3200,
-            duration: 40000,
+            duration: 59000,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         });
         
         nuage2 = this.physics.add.group();
-        var image = this.add.image(1500,140,'nuage2');
+        var image = this.add.image(1500,220,'nuage2');
         this.tweens.add({
 
             targets: image,
             x: 3200,
-            duration: 37000,
+            duration: 57000,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         });
         
         nuage2 = this.physics.add.group();
-        var image = this.add.image(1500,80,'nuage2');
+        var image = this.add.image(1500,115,'nuage2');
         this.tweens.add({
 
             targets: image,
             x: 3200,
-            duration: 33500,
+            duration: 56500,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         });
         
         nuage1 = this.physics.add.group();
-        var image = this.add.image(1500,80,'nuage1');
+        var image = this.add.image(1500,150,'nuage1');
         this.tweens.add({
 
             targets: image,
             x: 1700,
-            duration: 13500,
+            duration: 53500,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         });  
         
         nuage1 = this.physics.add.group();
-        var image = this.add.image(1500,180,'nuage1');
+        var image = this.add.image(1500,190,'nuage1');
         this.tweens.add({
 
             targets: image,
             x: 1700,
-            duration: 10500,
+            duration: 56000,
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
         }); 
         
-        this.add.image(0,-120,'level1').setOrigin(0);
+        this.add.image(0,-118,'level1').setOrigin(0);
         
         player = this.physics.add.sprite(101,59,'personnage');
         player.body.setAllowGravity(true);
@@ -234,18 +243,33 @@ class Stage1 extends Phaser.Scene{
         const map = this.make.tilemap({key : 'map'});
         const tileset = map.addTilesetImage('Tuiles','tiles');
         
-        this.cameras.main.setZoom(0.80)
+        this.cameras.main.setZoom(0.70)
         this.cameras.main.startFollow(player); 
         this.cameras.main.setBounds(0,0,3000,768);
         this.physics.world.setBounds(0,0,3000,768);
-        
+         
         platforms = map.createLayer('Platformes',tileset, 0, 0);
-        platforms.setCollisionByExclusion(-1,true)
+        platforms.setCollisionByExclusion(-1,true);
+        
+        sol = map.createLayer('Sol',tileset, 0, 0);
+        sol.setCollisionByExclusion(-1,true);
         
         
         player.setBounce(0.1);
         player.setCollideWorldBounds(true);
-        this.physics.add.collider(player, platforms);
+        collision_bas = this.physics.add.collider(player, platforms, passe_partout, null, this);
+        this.physics.add.collider(player, sol);
+        
+        function passe_partout (player,platforms){
+            if(cursors.down.isDown || KeyS.isDown){
+                collision_bas.active = false;
+                viensDeTraverser = true;
+                if (viensDeTraverser == true){
+                    viensDeTraverser = false;
+                    setTimeout(function(){collision_bas.active = true}, 25);
+                }
+            }
+        }
         
         
         
@@ -317,6 +341,8 @@ class Stage1 extends Phaser.Scene{
         if (cursors.up.isDown&& player.body.blocked.down || KeyZ.isDown && player.body.blocked.down){
                         console.log(cursors);
         player.setVelocityY(-450);
+            collision_bas.active = false;
+            setTimeout(function(){collision_bas.active = true}, 800);
         }        
     }        
 }
