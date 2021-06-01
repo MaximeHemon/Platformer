@@ -23,6 +23,8 @@ class Stage1 extends Phaser.Scene{
     }
     preload(){   
         
+        this.load.image('lune','Assets/lune.png')
+        this.load.image('ciel','Assets/ciel_etoiles.png')
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
@@ -40,6 +42,13 @@ class Stage1 extends Phaser.Scene{
         // setTimeout(function(){ce qui se passe}, temps en millisecondes) //
         //--------------------------------//
         
+        
+        
+        
+        
+        this.add.image(0,-118,'ciel').setOrigin(0);
+        
+        this.add.image(0,-118,'lune').setOrigin(0);
         //Nuages 
         
         nuage3 = this.physics.add.group();
