@@ -13,6 +13,10 @@ var nuage2;
 var nuage3;
 var collision_bas;
 var viensDeTraverser = false;
+var timeStep;
+var lune;
+var path;
+//var iter = 0;
 
 
 class Stage1 extends Phaser.Scene{
@@ -23,7 +27,7 @@ class Stage1 extends Phaser.Scene{
     }
     preload(){   
         
-        this.load.image('lune','Assets/lune.png')
+        this.load.image('lune','Assets/lune_done.png')
         this.load.image('ciel','Assets/ciel_etoiles.png')
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
@@ -37,18 +41,48 @@ class Stage1 extends Phaser.Scene{
         
     }
     create(){
-
+        
+        
         //----------setTimeout-------------//
         // setTimeout(function(){ce qui se passe}, temps en millisecondes) //
         //--------------------------------//
-        
-        
-        
-        
+                
         
         this.add.image(0,-118,'ciel').setOrigin(0);
+       
+        //scroll lune
         
-        this.add.image(0,-118,'lune').setOrigin(0);
+        lune=this.add.image(250,-120,'lune').setOrigin(0);
+        
+        
+        //rotation lune 
+        /*
+        lune = { t: 0, vec: new Phaser.Math.Vector2() };
+        path = new Phaser.Curves.Path();
+        path.add(new Phaser.Curves.Ellipse(400, 300, 100));
+        
+        this.tweens.add({
+        targets: lune,
+        t: 1,
+        ease: 'Sine.easeInOut',
+        duration: 4000,
+        yoyo: true,
+        repeat: -1
+    });
+        */
+
+        timeStep = new Phaser.Time.TimerEvent({ delay: 4000});
+        
+        this.time.addEvent(timeStep);
+        
+        this.input.on('pointerdown', () => {
+        
+            this.time.addEvent(timeStep);
+            }, this);
+        
+
+
+        
         //Nuages 
         
         nuage3 = this.physics.add.group();
@@ -294,6 +328,20 @@ class Stage1 extends Phaser.Scene{
         }
         update(){
             
+                   /* essai mouvement de lune */
+        /*
+        lune.tilePositionX = Math.cos(iter) * 2000;
+        lune.tilePositionY = Math.sin(iter) * 200;
+        iter += 0.0002;
+        */
+         
+        
+        //var progress = timeStep.getProgress();
+        lune.angle+=0.005;
+        lune.x+=0.1;
+        
+        
+        
           
         //Controles Manette
         this.input.gamepad.once('connected', function (pad) {
