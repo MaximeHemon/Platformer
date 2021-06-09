@@ -19,6 +19,13 @@ var path;
 //var iter = 0;
 
 
+//test orbite
+/*
+var follower;
+var path;
+var graphics;
+*/
+
 class Stage1 extends Phaser.Scene{
     constructor(){
         super("Stage1");
@@ -27,7 +34,7 @@ class Stage1 extends Phaser.Scene{
     }
     preload(){   
         
-        this.load.image('lune','Assets/lune_done.png')
+        this.load.image('lune','Assets/lune.png')
         this.load.image('ciel','Assets/ciel_etoiles.png')
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
@@ -52,24 +59,31 @@ class Stage1 extends Phaser.Scene{
        
         //scroll lune
         
-        lune=this.add.image(250,-120,'lune').setOrigin(0);
+        lune=this.add.image(1500,800,'lune').setOrigin(0);
         
         
-        //rotation lune 
+     
+        
+        //test orbite 
         /*
-        lune = { t: 0, vec: new Phaser.Math.Vector2() };
+        graphics = this.add.graphics();
+
+        follower = { t: 0, vec: new Phaser.Math.Vector2() };
+
         path = new Phaser.Curves.Path();
-        path.add(new Phaser.Curves.Ellipse(400, 300, 100));
-        
+
+        path.add(new Phaser.Curves.Ellipse(1450, 900, 900)); //(400, 300, 100));
+
         this.tweens.add({
-        targets: lune,
+        targets: follower,
         t: 1,
         ease: 'Sine.easeInOut',
-        duration: 4000,
-        yoyo: true,
+        duration: 26000,
+        yoyo: false,
         repeat: -1
-    });
+        });
         */
+        
 
         timeStep = new Phaser.Time.TimerEvent({ delay: 4000});
         
@@ -337,11 +351,24 @@ class Stage1 extends Phaser.Scene{
          
         
         //var progress = timeStep.getProgress();
-        lune.angle+=0.005;
-        lune.x+=0.1;
-        
-        
-        
+        lune.angle+=0.1;
+        console.log(lune.angle);
+        if (Math.round(lune.angle)==-35)
+        {lune.angle+=180;}
+        //lune.x+=0.1;
+           
+        //test orbite
+        /*
+        graphics.clear();
+        graphics.lineStyle(1, 0xfffCf, 0);
+
+        path.draw(graphics);
+
+        path.getPoint(follower.t, follower.vec);
+            
+        graphics.fillStyle(0xfffCf , 1); //('lune')
+        graphics.fillCircle(follower.vec.x, follower.vec.y, 140);
+        */
           
         //Controles Manette
         this.input.gamepad.once('connected', function (pad) {
