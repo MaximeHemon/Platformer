@@ -17,6 +17,7 @@ var timeStep;
 var lune;
 var path;
 //var iter = 0;
+var timer = 0;
 
 
 //test orbite
@@ -34,6 +35,7 @@ class Stage1 extends Phaser.Scene{
     }
     preload(){   
         
+        this.load.image('ball', 'Assets/ball.png');
         this.load.image('lune','Assets/lune.png')
         this.load.image('ciel','Assets/ciel_etoiles.png')
         this.load.image('level1','Assets/scene1.png');
@@ -53,49 +55,11 @@ class Stage1 extends Phaser.Scene{
         //----------setTimeout-------------//
         // setTimeout(function(){ce qui se passe}, temps en millisecondes) //
         //--------------------------------//
-                
+        
+        
+        
         
         this.add.image(0,-118,'ciel').setOrigin(0);
-       
-        //scroll lune
-        
-        lune=this.add.image(1500,800,'lune').setOrigin(0);
-        
-        
-     
-        
-        //test orbite 
-        /*
-        graphics = this.add.graphics();
-
-        follower = { t: 0, vec: new Phaser.Math.Vector2() };
-
-        path = new Phaser.Curves.Path();
-
-        path.add(new Phaser.Curves.Ellipse(1450, 900, 900)); //(400, 300, 100));
-
-        this.tweens.add({
-        targets: follower,
-        t: 1,
-        ease: 'Sine.easeInOut',
-        duration: 26000,
-        yoyo: false,
-        repeat: -1
-        });
-        */
-        
-
-        timeStep = new Phaser.Time.TimerEvent({ delay: 4000});
-        
-        this.time.addEvent(timeStep);
-        
-        this.input.on('pointerdown', () => {
-        
-            this.time.addEvent(timeStep);
-            }, this);
-        
-
-
         
         //Nuages 
         
@@ -289,9 +253,72 @@ class Stage1 extends Phaser.Scene{
             ease: 'Sine.easeInOut',
             loop: 90,
             loopDelay: 0
-        }); 
+        });
+       
+        //scroll lune
+        
+        lune=this.add.image(1500,800,'lune').setOrigin(0);
         
         this.add.image(0,-118,'level1').setOrigin(0);
+        
+        // balls
+        
+        var balls = this.physics.add.group({
+        key: 'ball',
+        quantity: 24,
+        bounceX: 1,
+        bounceY: 1,
+        collideWorldBounds: true,
+        velocityX: 300,
+        velocityY: 150
+        });
+        
+        this.physics.add.collider(
+        balls,
+        player,
+        platforms,
+        function (ball, player,platforms)
+        {
+            ball.setAlpha(0.5);
+        });
+        
+        
+        
+        //test orbite 
+        /*
+        graphics = this.add.graphics();
+
+        follower = { t: 0, vec: new Phaser.Math.Vector2() };
+
+        path = new Phaser.Curves.Path();
+
+        path.add(new Phaser.Curves.Ellipse(1450, 900, 900)); //(400, 300, 100));
+
+        this.tweens.add({
+        targets: follower,
+        t: 1,
+        ease: 'Sine.easeInOut',
+        duration: 26000,
+        yoyo: false,
+        repeat: -1
+        });
+        */
+        
+        /*
+        timeStep = new Phaser.Time.TimerEvent({ delay: 4000});
+        
+        this.time.addEvent(timeStep);
+        
+        this.input.on('pointerdown', () => {
+        
+            this.time.addEvent(timeStep);
+            }, this);
+        */
+
+
+        
+        
+        
         
         player = this.physics.add.sprite(101,59,'personnage');
         player.body.setAllowGravity(true);
@@ -351,9 +378,9 @@ class Stage1 extends Phaser.Scene{
          
         
         //var progress = timeStep.getProgress();
-        lune.angle+=0.1;
+        lune.angle+=0.09;
         console.log(lune.angle);
-        if (Math.round(lune.angle)==-35)
+        if (Math.round(lune.angle)==-34)
         {lune.angle+=180;}
         //lune.x+=0.1;
            
@@ -370,6 +397,12 @@ class Stage1 extends Phaser.Scene{
         graphics.fillCircle(follower.vec.x, follower.vec.y, 140);
         */
           
+        timer++
+        if (timer==60*60){
+        spawn()
+        }
+        
+            
         //Controles Manette
         this.input.gamepad.once('connected', function (pad) {
         paddle = pad;
@@ -427,6 +460,13 @@ class Stage1 extends Phaser.Scene{
         player.setVelocityY(-450);
             collision_bas.active = false;
             setTimeout(function(){collision_bas.active = true}, 800);
+            
+        
         }        
     }        
 }
+/*
+function spawn (){
+    spawn , grpEnnemis
+}
+*/
