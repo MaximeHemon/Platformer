@@ -13,11 +13,11 @@ var nuage2;
 var nuage3;
 var collision_bas;
 var viensDeTraverser = false;
-var timeStep;
+var timedEvent;
 var lune;
 var path;
-//var iter = 0;
-var timer = 0;
+var text;
+var image
 
 
 //test orbite
@@ -41,6 +41,9 @@ class Stage1 extends Phaser.Scene{
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
+        this.load.image('ennemie', 'Assets/Ennemie.png');
+        
+        
         
         
         this.load.tilemapTiledJSON('map','Assets/level_platforme.json');
@@ -51,12 +54,22 @@ class Stage1 extends Phaser.Scene{
     }
     create(){
         
+        image = this.add.image(20, 30, 'ennemie');
+        console.log(image);
         
         //----------setTimeout-------------//
         // setTimeout(function(){ce qui se passe}, temps en millisecondes) //
         //--------------------------------//
         
-        
+        //Time 
+        timedEvent = this.time.addEvent({ 
+            delay: 10000, 
+            callback: onEvent, 
+            callbackScope: this, 
+            repeat: 1, 
+            startAt: 5000 
+        });
+        text = this.add.text(32, 32);
         
         
         this.add.image(0,-118,'ciel').setOrigin(0);
@@ -261,7 +274,7 @@ class Stage1 extends Phaser.Scene{
         
         this.add.image(0,-118,'level1').setOrigin(0);
         
-        // balls
+        // ball
         
         var balls = this.physics.add.group({
         key: 'ball',
@@ -283,40 +296,7 @@ class Stage1 extends Phaser.Scene{
         });
         
         
-        
-        //test orbite 
-        /*
-        graphics = this.add.graphics();
-
-        follower = { t: 0, vec: new Phaser.Math.Vector2() };
-
-        path = new Phaser.Curves.Path();
-
-        path.add(new Phaser.Curves.Ellipse(1450, 900, 900)); //(400, 300, 100));
-
-        this.tweens.add({
-        targets: follower,
-        t: 1,
-        ease: 'Sine.easeInOut',
-        duration: 26000,
-        yoyo: false,
-        repeat: -1
-        });
-        */
-        
-        /*
-        timeStep = new Phaser.Time.TimerEvent({ delay: 4000});
-        
-        this.time.addEvent(timeStep);
-        
-        this.input.on('pointerdown', () => {
-        
-            this.time.addEvent(timeStep);
-            }, this);
-        */
-
-
-        
+             
         
         
         
@@ -363,13 +343,15 @@ class Stage1 extends Phaser.Scene{
         KeyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         KeyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         KeyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        
-        
-        
         }
         update(){
             
-                   /* essai mouvement de lune */
+
+
+
+        // function spawn due to timer 
+
+        /* essai mouvement de lune */
         /*
         lune.tilePositionX = Math.cos(iter) * 2000;
         lune.tilePositionY = Math.sin(iter) * 200;
@@ -378,8 +360,7 @@ class Stage1 extends Phaser.Scene{
          
         
         //var progress = timeStep.getProgress();
-        lune.angle+=0.09;
-        console.log(lune.angle);
+        lune.angle+=0.03;
         if (Math.round(lune.angle)==-34)
         {lune.angle+=180;}
         //lune.x+=0.1;
@@ -396,12 +377,13 @@ class Stage1 extends Phaser.Scene{
         graphics.fillStyle(0xfffCf , 1); //('lune')
         graphics.fillCircle(follower.vec.x, follower.vec.y, 140);
         */
-          
+        
+        /*
         timer++
         if (timer==60*60){
         spawn()
         }
-        
+        */
             
         //Controles Manette
         this.input.gamepad.once('connected', function (pad) {
@@ -470,3 +452,12 @@ function spawn (){
     spawn , grpEnnemis
 }
 */
+function onEvent ()
+{
+//apparition d'ennemies par zone de spawn prédéfinis autour de la maison
+}
+
+//Text timer
+{
+text.setText('Event.progress: ' + timedEvent.getProgress().toString().substr(0, 4) + '\nEvent.repeatCount: ' + timedEvent.repeatCount);
+}
