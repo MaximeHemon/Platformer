@@ -13,12 +13,12 @@ var nuage2;
 var nuage3;
 var collision_bas;
 var viensDeTraverser = false;
-var timedEvent;
 var lune;
-var path;
+//var path;
+var timedEvent;
 var text;
-var image
-
+var ennemie1;
+var ennemie_cree = false;
 
 //test orbite
 /*
@@ -42,10 +42,6 @@ class Stage1 extends Phaser.Scene{
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
         this.load.image('ennemie', 'Assets/Ennemie.png');
-        
-        
-        
-        
         this.load.tilemapTiledJSON('map','Assets/level_platforme.json');
         this.load.image('nuage1','Assets/nuage_1.png');
         this.load.image('nuage2','Assets/nuage_2.png');
@@ -54,28 +50,32 @@ class Stage1 extends Phaser.Scene{
     }
     create(){
         
-        image = this.add.image(20, 30, 'ennemie');
-        console.log(image);
-        
         //----------setTimeout-------------//
         // setTimeout(function(){ce qui se passe}, temps en millisecondes) //
         //--------------------------------//
+
+        // Time 
         
-        //Time 
-        timedEvent = this.time.addEvent({ 
+        /*timedEvent = this.time.addEvent({ 
             delay: 10000, 
             callback: onEvent, 
             callbackScope: this, 
             repeat: 1, 
             startAt: 5000 
         });
-        text = this.add.text(32, 32);
+        */
+        
+
+        ennemie1 = this.physics.add.group();
+        
+        //Timer de spawn ennemies
+        timedEvent = this.time.delayedCall(3000, onEvent, [], this);
         
         
+        //ciel
         this.add.image(0,-118,'ciel').setOrigin(0);
         
         //Nuages 
-        
         nuage3 = this.physics.add.group();
         var image = this.add.image(-100,220,'nuage3');
         this.tweens.add({
@@ -267,6 +267,9 @@ class Stage1 extends Phaser.Scene{
             loop: 90,
             loopDelay: 0
         });
+        
+        
+        
        
         //scroll lune
         
@@ -274,29 +277,27 @@ class Stage1 extends Phaser.Scene{
         
         this.add.image(0,-118,'level1').setOrigin(0);
         
-        // ball
+        // ball 
         
         var balls = this.physics.add.group({
         key: 'ball',
-        quantity: 24,
+        quantity: 1,
         bounceX: 1,
         bounceY: 1,
         collideWorldBounds: true,
-        velocityX: 300,
-        velocityY: 150
+        velocityX: 100,
+        velocityY: 100
         });
         
         this.physics.add.collider(
         balls,
         player,
+        sol,
         platforms,
-        function (ball, player,platforms)
+        function (ball, player,platforms,sol)
         {
-            ball.setAlpha(0.5);
+            ball.setAlpha(1);
         });
-        
-        
-             
         
         
         
@@ -323,6 +324,7 @@ class Stage1 extends Phaser.Scene{
         player.setCollideWorldBounds(true);
         collision_bas = this.physics.add.collider(player, platforms, passe_partout, null, this);
         this.physics.add.collider(player, sol);
+        this.physics.add.collider(ennemie1, sol);
         
         function passe_partout (player,platforms){
             if(cursors.down.isDown || KeyS.isDown){
@@ -345,46 +347,22 @@ class Stage1 extends Phaser.Scene{
         KeyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         }
         update(){
-            
-
-
-
-        // function spawn due to timer 
-
-        /* essai mouvement de lune */
-        /*
-        lune.tilePositionX = Math.cos(iter) * 2000;
-        lune.tilePositionY = Math.sin(iter) * 200;
-        iter += 0.0002;
-        */
-         
         
-        //var progress = timeStep.getProgress();
-        lune.angle+=0.03;
+            
+        if (ennemie_cree == false){
+            ennemie_cree = true;
+            setTimeout(function(){
+                ennemie1.create(101,600,'ennemie');
+                ennemie1.setCollideWorldBounds(true);
+            }, 3000);
+            setTimeout(function(){ennemie_cree = false}, 3000);
+        }    
+        
+        lune.angle+=0.02;
         if (Math.round(lune.angle)==-34)
         {lune.angle+=180;}
-        //lune.x+=0.1;
-           
-        //test orbite
-        /*
-        graphics.clear();
-        graphics.lineStyle(1, 0xfffCf, 0);
 
-        path.draw(graphics);
-
-        path.getPoint(follower.t, follower.vec);
-            
-        graphics.fillStyle(0xfffCf , 1); //('lune')
-        graphics.fillCircle(follower.vec.x, follower.vec.y, 140);
-        */
         
-        /*
-        timer++
-        if (timer==60*60){
-        spawn()
-        }
-        */
-            
         //Controles Manette
         this.input.gamepad.once('connected', function (pad) {
         paddle = pad;
@@ -454,10 +432,6 @@ function spawn (){
 */
 function onEvent ()
 {
-//apparition d'ennemies par zone de spawn prédéfinis autour de la maison
+
 }
 
-//Text timer
-{
-text.setText('Event.progress: ' + timedEvent.getProgress().toString().substr(0, 4) + '\nEvent.repeatCount: ' + timedEvent.repeatCount);
-}
