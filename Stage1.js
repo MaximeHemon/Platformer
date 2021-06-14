@@ -15,7 +15,9 @@ var collision_bas;
 var viensDeTraverser = false;
 var lune;
 var timedEvent;
-var ennemie1;
+var enemy1;
+var enemy2;
+var enemy3;
 var ennemie_cree = false;
 
 
@@ -33,7 +35,9 @@ class Stage1 extends Phaser.Scene{
         this.load.image('level1','Assets/scene1.png');
         this.load.image('personnage','Assets/Shadow.png');
         this.load.image('tiles','Assets/Tiles.png');
-        this.load.image('ennemie', 'Assets/Ennemie.png');
+        this.load.image('enemy1', 'Assets/Enemy1.png');
+        this.load.image('enemy2', 'Assets/Enemy2.png');
+        this.load.image('enemy3', 'Assets/Enemy3.png');
         this.load.tilemapTiledJSON('map','Assets/level_platforme.json');
         this.load.image('nuage1','Assets/nuage_1.png');
         this.load.image('nuage2','Assets/nuage_2.png');
@@ -58,10 +62,13 @@ class Stage1 extends Phaser.Scene{
         */
         
         //Ennemies 
-        ennemie1 = this.physics.add.group();
-        
+        enemy1 = this.physics.add.group();
+        enemy2 = this.physics.add.group();
+        enemy3 = this.physics.add.group();
         //Timer de spawn ennemies
         timedEvent = this.time.delayedCall(3000, onEvent, [], this);
+        setTimeout(function(){ ennemie_cree = false}, 10000); //160000
+        ennemie_cree = true;
         
         
         //ciel
@@ -260,15 +267,16 @@ class Stage1 extends Phaser.Scene{
             loopDelay: 0
         });
         
+        //lune spawn
+        lune=this.add.image(1500,800,'lune').setOrigin(0);
+
+        lune.angle += 135;
         
-        
+        //Maison 
+        this.add.image(0,-118,'level1').setOrigin(0);
        
         // lune
-        
-        lune=this.add.image(1500,800,'lune').setOrigin(0);
-        
-        this.add.image(0,-118,'level1').setOrigin(0);
-        
+
         // ball 
         /*
         var balls = this.physics.add.group({
@@ -294,7 +302,6 @@ class Stage1 extends Phaser.Scene{
         });
         */
         
-        
         player = this.physics.add.sprite(101,630,'personnage');
         player.body.setAllowGravity(true);
         
@@ -318,7 +325,9 @@ class Stage1 extends Phaser.Scene{
         player.setCollideWorldBounds(true);
         collision_bas = this.physics.add.collider(player, platforms, passe_partout, null, this);
         this.physics.add.collider(player, sol);
-        this.physics.add.collider(ennemie1, sol);
+        this.physics.add.collider(enemy1, sol);
+        this.physics.add.collider(enemy2, sol);
+        this.physics.add.collider(enemy3, sol);
         
         function passe_partout (player,platforms){
             if(cursors.down.isDown || KeyS.isDown){
@@ -331,38 +340,42 @@ class Stage1 extends Phaser.Scene{
             }
         }
         
-        
-        
         cursors = this.input.keyboard.createCursorKeys(); 
         
         KeyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         KeyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         KeyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         KeyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        
-        
-        //lune spawn
-        lune.angle += 135;
+          
         }
     
 
         update(){
-        
-        // timer spawn ennemy    
-        if (ennemie_cree == false){
-            ennemie_cree = true;
-            setTimeout(function(){
-                ennemie1.create(101,600,'ennemie');
-                ennemie1.setCollideWorldBounds(true);
-            }, 3000);
-            setTimeout(function(){ennemie_cree = false}, 3000);
-        }    
+            
         // moon path
         lune.angle+=0.02;
         if (Math.round(lune.angle)==-34)
         {lune.angle+=180;}
-
         
+        // timer spawn ennemy    
+        if (ennemie_cree == true){
+            
+            setTimeout(function(){
+                enemy1.create(101,650,'enemy1');
+                enemy1.setCollideWorldBounds(true);
+            }, 10000);
+            setTimeout(function(){
+                enemy2.create(200,650,'enemy2');
+                enemy2.setCollideWorldBounds(true);
+            }, 20000);
+            setTimeout(function(){
+                enemy3.create(2950,650,'enemy3');
+                enemy3.setCollideWorldBounds(true);
+            }, 30000);
+            setTimeout(function(){ennemie_cree = false}, 3000);
+        }  
+        
+
         //Controles Manette
         this.input.gamepad.once('connected', function (pad) {
         paddle = pad;
@@ -400,7 +413,6 @@ class Stage1 extends Phaser.Scene{
         
         }
         
-        
         //Controles Clavier
         if (cursors.left.isDown || KeyQ.isDown){
         player.setVelocityX(-600);
@@ -421,7 +433,6 @@ class Stage1 extends Phaser.Scene{
             collision_bas.active = false;
             setTimeout(function(){collision_bas.active = true}, 900);
             
-        
         }        
     }        
 }
