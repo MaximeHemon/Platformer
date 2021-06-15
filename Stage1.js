@@ -19,6 +19,7 @@ var enemy1;
 var enemy2;
 var enemy3;
 var ennemie_cree = false;
+var compteur1;
 
 
 class Stage1 extends Phaser.Scene{
@@ -67,12 +68,21 @@ class Stage1 extends Phaser.Scene{
         enemy3 = this.physics.add.group();
         //Timer de spawn ennemies
         timedEvent = this.time.delayedCall(3000, onEvent, [], this);
-        setTimeout(function(){ ennemie_cree = false}, 10000); //160000
+        setTimeout(function(){ ennemie_cree = false}, 160000); //10000
         ennemie_cree = true;
         
-        
+        // Compteur d'ennemis 
+        compteur1 = 
+            
         //ciel
         this.add.image(0,-118,'ciel').setOrigin(0);
+        
+
+        
+        //lune spawn
+        lune=this.add.image(1500,800,'lune').setOrigin(0);
+
+        lune.angle += 135;
         
         //Nuages 
         nuage3 = this.physics.add.group();
@@ -267,11 +277,6 @@ class Stage1 extends Phaser.Scene{
             loopDelay: 0
         });
         
-        //lune spawn
-        lune=this.add.image(1500,800,'lune').setOrigin(0);
-
-        lune.angle += 135;
-        
         //Maison 
         this.add.image(0,-118,'level1').setOrigin(0);
        
@@ -352,6 +357,8 @@ class Stage1 extends Phaser.Scene{
 
         update(){
             
+        
+            
         // moon path
         lune.angle+=0.02;
         if (Math.round(lune.angle)==-34)
@@ -359,6 +366,7 @@ class Stage1 extends Phaser.Scene{
         
         // timer spawn ennemy    
         if (ennemie_cree == true){
+           
             
             setTimeout(function(){
                 enemy1.create(101,650,'enemy1');
