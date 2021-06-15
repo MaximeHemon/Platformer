@@ -61,17 +61,35 @@ class Stage1 extends Phaser.Scene{
             startAt: 5000 
         });
         */
+        //tween ennemies
+
         
         //Ennemies 
         enemy1 = this.physics.add.group();
         enemy2 = this.physics.add.group();
         enemy3 = this.physics.add.group();
+        
         //Timer de spawn ennemies
         timedEvent = this.time.delayedCall(3000, onEvent, [], this);
         setTimeout(function(){ ennemie_cree = false}, 160000); //10000
         ennemie_cree = true;
         
-        // Compteur d'ennemis 
+        
+        /*
+        //Tween Ennemies
+        this.tweens.add({
+            
+            targets: [enemy1, enemy2, enemy3],
+                x: 1500,
+                    duration: 1000,
+                    flipX: true,
+                    repeat: -1,
+                    yoyo: true,
+                repeat: -1
+        });
+        */
+        
+        // Compteur pour limiter les ennemis 
         compteur1 = 
             
         //ciel
@@ -355,6 +373,8 @@ class Stage1 extends Phaser.Scene{
         }
     
 
+    
+
         update(){
             
         
@@ -375,11 +395,11 @@ class Stage1 extends Phaser.Scene{
             setTimeout(function(){
                 enemy2.create(200,650,'enemy2');
                 enemy2.setCollideWorldBounds(true);
-            }, 20000);
+            }, 40000);
             setTimeout(function(){
                 enemy3.create(2950,650,'enemy3');
                 enemy3.setCollideWorldBounds(true);
-            }, 30000);
+            }, 100000);
             setTimeout(function(){ennemie_cree = false}, 3000);
         }  
         
