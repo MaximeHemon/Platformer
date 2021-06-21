@@ -341,6 +341,7 @@ class Stage1 extends Phaser.Scene{
         //player
         player = this.physics.add.sprite(1500,630,'personnage');
         player.body.setAllowGravity(true);
+        player.setSize(44,86)
         
         //Tiled map
         const map = this.make.tilemap({key : 'map'});
