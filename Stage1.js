@@ -339,7 +339,7 @@ class Stage1 extends Phaser.Scene{
         */
         
         //player
-        player = this.physics.add.sprite(101,630,'personnage');
+        player = this.physics.add.sprite(1500,630,'personnage');
         player.body.setAllowGravity(true);
         
         //Tiled map
@@ -404,6 +404,7 @@ class Stage1 extends Phaser.Scene{
         else if (ennemy1.x < player.x && ennemy1s.x <= 3000){
             ennemy1.setVelocityX(100);
         */ 
+            
         // moon path
         lune.angle+=0.02;
         if (Math.round(lune.angle)==-34)
@@ -430,7 +431,7 @@ class Stage1 extends Phaser.Scene{
                 IAenemy4 = true;
             }, 30000);
         }  
-        
+        //Comportement Enemy1 
         if (IAenemy1 == true){
             if (nouveau_enemy1.x < player.x && nouveau_enemy1.x >= 0){
             nouveau_enemy1.setVelocityX(25);
@@ -447,6 +448,7 @@ class Stage1 extends Phaser.Scene{
                 IAenemy1 = false;
             }
         }
+
             
 
         //Controles Manette
